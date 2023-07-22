@@ -1,10 +1,17 @@
 import { SlBasket } from 'react-icons/sl'
 import useStore from '../Zustand/Products'
 import { Link, useNavigate } from 'react-router-dom'
+import useUser from '../Zustand/User';
 
 export default function Headers() {
     const { products } = useStore();
     const navigate = useNavigate();
+    const { email, logout } = useUser();
+    const logOut = () => {
+        window.localStorage.removeItem('user');
+        logout();
+        navigate('/Signin');
+    }
     return (
         <div className=' w-ful h-16 flex justify-evenly p-3'>
             <div>
@@ -13,7 +20,7 @@ export default function Headers() {
             <nav>
                 <ul className='flex justify-around gap-5'>
                     <li><Link to="/">Home</Link></li>
-                    <li><Link to='myBasket'>Contanct</Link></li>
+                    <li><Link to='contact'>Contanct</Link></li>
                 </ul>
             </nav>
             {/* basket  */}
@@ -25,6 +32,14 @@ export default function Headers() {
                 }
                 <SlBasket size={30} />
             </div>
+            <div>
+                {
+                    email
+                }
+            </div>
+            <button onClick={() => { logOut() }}>
+                logout
+            </button>
         </div>
     )
 }

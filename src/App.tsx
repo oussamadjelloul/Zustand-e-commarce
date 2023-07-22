@@ -4,6 +4,8 @@ import Home from './Pages/Home'
 import Basket from './Pages/Basket'
 import Signin from './Pages/Signin'
 import ProtectRoute from './Hooks/ProtectRoute'
+import ProtectAuth from './Hooks/ProtectAuth'
+import Contact from './Pages/Contact'
 
 function App() {
 
@@ -11,9 +13,14 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path='/Signin' element={<ProtectRoute><Signin /></ProtectRoute>} />
+          <Route path='/Signin' element={
+            <ProtectAuth>
+              <Signin />
+            </ProtectAuth>} />
           <Route path='/' element={<ProtectRoute><Home /></ProtectRoute>} />
           <Route path='/myBasket' element={<ProtectRoute> <Basket /></ProtectRoute>} />
+          <Route path='/contact' element={<ProtectRoute> <Contact /></ProtectRoute>} />
+          
         </Routes>
       </Router>
     </>

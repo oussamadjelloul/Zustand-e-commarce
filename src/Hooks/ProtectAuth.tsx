@@ -4,7 +4,7 @@ import useUser from '../Zustand/User'
 interface Props {
     children: React.ReactNode
 }
-export default function ProtectRoute({ children }: Props) {
+export default function ProtectAuth({ children }: Props) {
     const { email, password, login } = useUser();
     const dd: string | null = window.localStorage.getItem('user');
     type User = {
@@ -13,11 +13,11 @@ export default function ProtectRoute({ children }: Props) {
     }
     const user: null | User = dd ? JSON.parse(dd) : null;
     if (email !== "" && password !== "") {
-        return children
+        return <Navigate to='/' />
     }
     if (user && Object.keys(user).length > 0) {
         login(user.email, user.password);
-        return children
+        return <Navigate to='/' />
     }
-    return <Navigate to='/Signin' />
+    return children
 }
